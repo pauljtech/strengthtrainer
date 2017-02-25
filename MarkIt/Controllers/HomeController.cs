@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MarkIt.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +11,9 @@ namespace MarkIt.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var db = new MarkItContext();
+            var workouts = db.Workouts.ToList();
+            return View(workouts);
         }
 
         public ActionResult About()

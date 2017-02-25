@@ -1,6 +1,14 @@
-﻿@{
+﻿@model List<MarkIt.Data.Entities.Workout>
+@{
     ViewBag.Title = "Home Page";
 }
+
+<div id="workout-list">
+    @foreach(var workout in Model)
+    {
+        <p>Workout Date: @workout.Date</p>
+    }
+</div>
 
 <div class="jumbotron">
     <h1>ASP.NET</h1>
