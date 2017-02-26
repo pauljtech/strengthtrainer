@@ -8,12 +8,69 @@ namespace MarkIt.Data
     {
         protected override void Seed(MarkItContext context)
         {
+
+            var exerciseOneArmRows = new Exercise { ExerciseType = ExerciseType.Weights, Title = "One Arm Rows" };
+            var exerciseBenchPress = new Exercise { ExerciseType = ExerciseType.Weights, Title = "Bench Press" };
+            var exercisePullovers = new Exercise { ExerciseType = ExerciseType.Weights, Title = "Pullovers" };
+            var exerciseDumbbellFlys = new Exercise { ExerciseType = ExerciseType.Weights, Title = "Dumbbell Flys" };
+
+            var exercises = new List<Exercise> { exerciseOneArmRows, exerciseBenchPress, exercisePullovers, exerciseDumbbellFlys };
+
+            exercises.ForEach(x => context.Exercises.Add(x));
+            context.SaveChanges();
+
+            var userPaul = new User { Name = "Paul Johnson" };
+            var userFirst = new User { Name = "First User" };
+
+            var users = new List<User>
+            {
+                userPaul,
+                userFirst
+            };
+
+            users.ForEach(x => context.Users.Add(x));
+            context.SaveChanges();
+
             var workouts = new List<Workout>
             {
-                new Workout { Date = DateTime.Now } 
+                new Workout { Id = 3, UserId = userPaul.Id, StartDateTime = DateTime.Now },
+                new Workout { Id = 2, UserId = userPaul.Id, StartDateTime = DateTime.Now.AddDays(-1).AddMinutes(5) },
+                new Workout { Id = 1, UserId = userPaul.Id, StartDateTime = DateTime.Now.AddDays(-3).AddMinutes(-5) }
             };
 
             workouts.ForEach(x => context.Workouts.Add(x));
+            context.SaveChanges();
+
+            var workoutExercises = new List<WorkoutExercise>()
+            {
+                new WorkoutExercise { Id = 1, WorkoutId = 1, ExerciseId = exerciseOneArmRows.Id },
+                new WorkoutExercise { Id = 2, WorkoutId = 1, ExerciseId = exerciseBenchPress.Id },
+                new WorkoutExercise { Id = 3, WorkoutId = 1, ExerciseId = exercisePullovers.Id },
+                new WorkoutExercise { Id = 4, WorkoutId = 1, ExerciseId = exerciseDumbbellFlys.Id }
+            };
+
+            workoutExercises.ForEach(x => context.WorkoutExercises.Add(x));
+            context.SaveChanges();
+
+            var startDate = DateTime.Now;
+
+            var workoutExerciseSets = new List<Set>()
+            {
+                new Set { WorkoutExerciseId = 1, Number = 1, Weight = 50, WeightType = WeightType.Pounds, Reps = 15, StartDateTime = DateTime.Now },
+                new Set { WorkoutExerciseId = 1, Number = 2, Weight = 50, WeightType = WeightType.Pounds, Reps = 15, StartDateTime = startDate.AddMinutes(2) },
+                new Set { WorkoutExerciseId = 1, Number = 3, Weight = 50, WeightType = WeightType.Pounds, Reps = 12, StartDateTime = startDate.AddMinutes(2) },
+                new Set { WorkoutExerciseId = 2, Number = 1, Weight = 100, WeightType = WeightType.Pounds, Reps = 14, StartDateTime = startDate.AddMinutes(2) },
+                new Set { WorkoutExerciseId = 2, Number = 2, Weight = 100, WeightType = WeightType.Pounds, Reps = 12, StartDateTime = startDate.AddMinutes(2) },
+                new Set { WorkoutExerciseId = 2, Number = 3, Weight = 100, WeightType = WeightType.Pounds, Reps = 12, StartDateTime = startDate.AddMinutes(2) },
+                new Set { WorkoutExerciseId = 3, Number = 1, Weight = 50, WeightType = WeightType.Pounds, Reps = 12, StartDateTime = startDate.AddMinutes(2) },
+                new Set { WorkoutExerciseId = 3, Number = 2, Weight = 50, WeightType = WeightType.Pounds, Reps = 12, StartDateTime = startDate.AddMinutes(2) },
+                new Set { WorkoutExerciseId = 3, Number = 3, Weight = 50, WeightType = WeightType.Pounds, Reps = 10, StartDateTime = startDate.AddMinutes(2) },
+                new Set { WorkoutExerciseId = 4, Number = 1, Weight = 40, WeightType = WeightType.Pounds, Reps = 15, StartDateTime = startDate.AddMinutes(2) },
+                new Set { WorkoutExerciseId = 4, Number = 2, Weight = 40, WeightType = WeightType.Pounds, Reps = 12, StartDateTime = startDate.AddMinutes(2) },
+                new Set { WorkoutExerciseId = 4, Number = 3, Weight = 40, WeightType = WeightType.Pounds, Reps = 12, StartDateTime = startDate.AddMinutes(2) }
+            };
+
+            workoutExerciseSets.ForEach(x => context.Sets.Add(x));
             context.SaveChanges();
         }
     }
