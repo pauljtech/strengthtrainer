@@ -22,11 +22,4 @@ namespace MarkIt.Data.Entities
 
         public ExerciseType ExerciseType { get; set; }
     }
-
-    // in case user wants to log exercises not in the MarkIt database
-    public class CustomExercise
-    {
-        public int Id { get; set; }
-        public string Title { get; set; }
-    }
 }

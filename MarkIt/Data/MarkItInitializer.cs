@@ -9,6 +9,7 @@ namespace MarkIt.Data
         protected override void Seed(MarkItContext context)
         {
 
+            // seed Exercise table
             var exerciseOneArmRows = new Exercise { ExerciseType = ExerciseType.Weights, Title = "One Arm Rows" };
             var exerciseBenchPress = new Exercise { ExerciseType = ExerciseType.Weights, Title = "Bench Press" };
             var exercisePullovers = new Exercise { ExerciseType = ExerciseType.Weights, Title = "Pullovers" };
@@ -19,6 +20,7 @@ namespace MarkIt.Data
             exercises.ForEach(x => context.Exercises.Add(x));
             context.SaveChanges();
 
+            // seed User table (will be replaced soon)
             var userPaul = new User { Name = "Paul Johnson" };
             var userFirst = new User { Name = "First User" };
 
@@ -31,16 +33,16 @@ namespace MarkIt.Data
             users.ForEach(x => context.Users.Add(x));
             context.SaveChanges();
 
+            // seed Workout table
             var workouts = new List<Workout>
             {
-                new Workout { Id = 3, UserId = userPaul.Id, StartDateTime = DateTime.Now },
-                new Workout { Id = 2, UserId = userPaul.Id, StartDateTime = DateTime.Now.AddDays(-1).AddMinutes(5) },
-                new Workout { Id = 1, UserId = userPaul.Id, StartDateTime = DateTime.Now.AddDays(-3).AddMinutes(-5) }
+                new Workout { Id = 1, UserId = userPaul.Id, StartDateTime = DateTime.Now }
             };
 
             workouts.ForEach(x => context.Workouts.Add(x));
             context.SaveChanges();
 
+            // seed WorkoutExercises table
             var workoutExercises = new List<WorkoutExercise>()
             {
                 new WorkoutExercise { Id = 1, WorkoutId = 1, ExerciseId = exerciseOneArmRows.Id },
@@ -52,6 +54,7 @@ namespace MarkIt.Data
             workoutExercises.ForEach(x => context.WorkoutExercises.Add(x));
             context.SaveChanges();
 
+            // seed Sets table
             var startDate = DateTime.Now;
 
             var workoutExerciseSets = new List<Set>()

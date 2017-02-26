@@ -59,7 +59,7 @@ namespace MarkIt.Data.Entities
 
         public int? GoalRepsPerSet { get; set; }
 
-        //public WeightType? WeightType { get; set; }
+        public WeightType? WeightType { get; set; }
 
         public int GoalWeightPerSet { get; set; }
     }
