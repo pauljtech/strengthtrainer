@@ -1,0 +1,79 @@
+﻿@model List<StrengthTrainer.Data.Entities.Workout>
+@{
+    ViewBag.Title = "Home Page";
+}
+<style>
+    #chart td {
+        border: 1px solid rgb(128, 128, 128);
+        min-width: 120px;
+        height: 75px;
+        padding: 20px;
+    }
+    .workout {
+        /*border:1px solid rgb(128, 128, 128);*/
+        margin-top:20px;
+        /*padding:10px;*/
+    }
+    .workoutExercise {
+        min-height:60px;
+    }
+    .workoutExerciseTitle {
+        font-weight: bold;
+    }
+    .workoutExerciseSet {
+        font-size:.8em;
+    }
+</style>
+<div>
+    <a href="~/workout">Start a Workout</a>
+</div>
+<div id="workout-list">
+    @foreach (var workout in Model)
+    {
+        <div class="workout">
+            <div>Workout Date: @workout.StartDateTime</div>
+            
+            <table id="chart">
+                <tr>
+                    <th>Exercise</th>
+                    <th>Set 1</th>
+                    <th>Set 2</th>
+                    <th>Set 3</th>
+                    <th>Set 4</th>
+                    <th>Set 5</th>
+                </tr>
+                @foreach (var workoutExercise in workout.Exercises)
+                {
+                    <tr class="workoutExercise">
+                        <td class="workoutExerciseTitle">@workoutExercise.Exercise.Title</td>
+                        @for(int i = 1; i <= 5; i++)
+                        {
+                            var set = workoutExercise.Sets.SingleOrDefault(x => x.Number == i);
+
+                            if (set != null)
+                            {
+                                <td class="workoutExerciseSet">@set.Reps Reps / @set.Weight @GetWeightType(set.WeightType)</td>
+                            }
+                            else
+                            {
+                                <td>&nbsp;</td>
+                            }
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+</div>
+@functions
+{
+    string GetWeightType(WeightType? weightType)
+    {
+        if (weightType == WeightType.Pounds)
+            return "lbs";
+        else
+            return "kg";
+    }
+}
+
+
