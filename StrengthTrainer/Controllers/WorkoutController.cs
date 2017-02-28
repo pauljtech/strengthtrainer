@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StrengthTrainer.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,16 +9,45 @@ namespace StrengthTrainer.Controllers
 {
     public class WorkoutController : Controller
     {
-        // GET: Workout
-        public ActionResult Index()
+        // GET: workout
+        // This will be a single page app experience
+        public ActionResult Active()
         {
+            // todo - check that is active, if not redirect to workout/start
+
             return View();
         }
 
-        [HttpPost]
+        // GET: workout/start
         public ActionResult Start()
         {
-            return new RedirectResult("~/Sets");
+            return View();
+        }
+        
+        // GET: workout/results
+        public ActionResult Results()
+        {
+            var db = new StrengthTrainerContext();
+            var workouts = db.Workouts.ToList();
+            return View(workouts);
+        }
+
+        [HttpPost]
+        public ActionResult StartWorkout()
+        {
+            // save workout to db
+
+            // redirect to SPA experience
+            return RedirectToAction("Active", "Workout");
+        }
+
+        [HttpPost]
+        public ActionResult FinishWorkout()
+        {
+            // save enddatetime to workout
+
+            // redirect to SPA experience
+            return RedirectToAction("Results", "Workout");
         }
     }
 }

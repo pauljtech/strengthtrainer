@@ -1,0 +1,77 @@
+﻿@model List<Workout>
+@{
+    ViewBag.Title = "Results";
+}
+
+<h2>Results</h2>
+
+<div><a href="~/board">Back to Board</a></div>
+
+<style>
+    #chart td {
+        border: 1px solid rgb(128, 128, 128);
+        min-width: 120px;
+        height: 75px;
+        padding: 20px;
+    }
+    .workout {
+        margin-top: 20px;
+    }
+    .workout-exercise {
+        min-height: 60px;
+    }
+    .workout-exercise-title {
+        font-weight: bold;
+    }
+    .workout-exercise-set {
+        font-size: .8em;
+    }
+</style>
+<div id="workout-list">
+    @foreach (var workout in Model)
+    {
+        <div class="workout">
+            <div>Workout Date: @workout.StartDateTime</div>
+
+            <table id="chart">
+                <tr>
+                    <th>Exercise</th>
+                    <th>Set 1</th>
+                    <th>Set 2</th>
+                    <th>Set 3</th>
+                    <th>Set 4</th>
+                    <th>Set 5</th>
+                </tr>
+                @foreach (var workoutExercise in workout.Exercises)
+                {
+                    <tr class="workout-exercise">
+                        <td class="workout-exercise-title">@workoutExercise.Exercise.Title</td>
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            var set = workoutExercise.Sets.SingleOrDefault(x => x.Number == i);
+
+                            if (set != null)
+                            {
+                                <td class="workoutExerciseSet">@set.Reps Reps / @set.Weight @GetWeightType(set.WeightType)</td>
+                            }
+                            else
+                            {
+                                <td>&nbsp;</td>
+                            }
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+</div>
+@functions
+{
+    string GetWeightType(WeightType? weightType)
+    {
+        if (weightType == WeightType.Pounds)
+            return "lbs";
+        else
+            return "kg";
+    }
+}

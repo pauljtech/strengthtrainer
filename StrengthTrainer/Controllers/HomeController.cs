@@ -11,21 +11,19 @@ namespace StrengthTrainer.Controllers
     {
         public ActionResult Index()
         {
-            var db = new StrengthTrainerContext();
-            var workouts = db.Workouts.ToList();
-            return View(workouts);
+            return View();
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "An HTML5/CSS, jQuery, and ASP.Net MVC Web Application for tracking strength training workouts.";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Contact us.";
 
             return View();
         }
