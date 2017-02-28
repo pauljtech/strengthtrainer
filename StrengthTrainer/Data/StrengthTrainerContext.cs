@@ -17,9 +17,8 @@ namespace StrengthTrainer.Data
         public DbSet<Exercise> Exercises { get; set; }
 
         public DbSet<WorkoutExercise> WorkoutExercises { get; set; }
-
-        public DbSet<Set> Sets { get; set; }
         
+        public DbSet<Set> Sets { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

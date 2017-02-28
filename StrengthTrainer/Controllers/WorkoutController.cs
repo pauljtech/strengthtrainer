@@ -9,6 +9,8 @@ namespace StrengthTrainer.Controllers
 {
     public class WorkoutController : Controller
     {
+        private StrengthTrainerContext db = new StrengthTrainerContext();
+
         // GET: workout
         // This will be a single page app experience
         public ActionResult Active()
@@ -27,7 +29,6 @@ namespace StrengthTrainer.Controllers
         // GET: workout/results
         public ActionResult Results()
         {
-            var db = new StrengthTrainerContext();
             var workouts = db.Workouts.ToList();
             return View(workouts);
         }
@@ -48,6 +49,16 @@ namespace StrengthTrainer.Controllers
 
             // redirect to SPA experience
             return RedirectToAction("Results", "Workout");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this.db.Dispose();
+            }
+
+            base.Dispose(disposing);
         }
     }
 }
