@@ -1,5 +1,7 @@
 ﻿using StrengthTrainer.Data;
 using StrengthTrainer.Data.Entities;
+using StrengthTrainer.Logic;
+using StrengthTrainer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,19 +15,14 @@ namespace StrengthTrainer.Controllers
 {
     public class SetsController : ApiController
     {
-        private StrengthTrainerContext db = new StrengthTrainerContext();
-
-        // GET api/Sets
-        public IQueryable<Set> Get()
-        {
-            return db.Sets;
-        }
+        private SetProvider provider = new SetProvider();
 
         // GET: api/Sets/5
-        [ResponseType(typeof(Set))]
+        [ResponseType(typeof(SetModel))]
         public async Task<IHttpActionResult> GetSet(int id)
         {
-            Set set = await db.Sets.FindAsync(id);
+            SetModel set = await provider.GetSet(id);
+
             if (set == null)
             {
                 return NotFound();
@@ -49,14 +46,6 @@ namespace StrengthTrainer.Controllers
         {
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                this.db.Dispose();
-            }
 
-            base.Dispose(disposing);
-        }
     }
 }
