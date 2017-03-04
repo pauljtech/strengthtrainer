@@ -5,8 +5,30 @@
 
 <p>Single Page Application Experience.</p>
 
-<div>
-    <form id="finish-workout" method="post" action="~/workout/finishworkout">
-        <input id="finish-button" type="submit" value="Finish!" />
-    </form>
+<div id="workout-container" ng-app="WorkoutApp">
+    <div id="workout-inner" ng-controller="WorkoutCtrl">
+
+        <form id="loadSetForm" method="post" action="~/api/sets">
+            <input type="text" name="setId" ng-model="setId" ng-required="true" />
+        </form>
+        <button class="btn btn-info btn-lg" ng-click="loadSet()">Load Set</button>
+        <div ng-show="data.id > 0">
+            <h3>Set Information</h3>
+            <div>Id: {{data.id}}</div>
+            <div>Set Number: {{data.number}}</div>
+            <div>Reps: {{data.reps}}</div>
+            <div>Weight: {{data.weight}}</div>
+            <div>Weight Type: {{data.weightType}}</div>
+            <div>Start Date: {{data.startDateTime}}</div>
+            <div ng-show="data.notes">Notes: {{data.notes}}</div>
+        </div>
+        <div ng-show="data.errorMessage">
+            {{data.errorMessage}}
+        </div>
+    </div>
 </div>
+
+@section scripts {
+    @Scripts.Render("~/Scripts/angular.js")
+    @Scripts.Render("~/Scripts/app/workout-controller.js")
+}

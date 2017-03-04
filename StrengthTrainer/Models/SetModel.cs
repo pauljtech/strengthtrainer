@@ -18,7 +18,7 @@ namespace StrengthTrainer.Models
         // Weight is per rep
         public double? Weight { get; set; }
 
-        public WeightType? WeightType { get; set; }
+        public string WeightType { get; set; }
 
         public int Reps { get; set; }
 

@@ -17,7 +17,7 @@ namespace StrengthTrainer.Controllers
     {
         private SetProvider provider = new SetProvider();
 
-        // GET: api/Sets/5
+        // GET: api/sets/5
         [ResponseType(typeof(SetModel))]
         public async Task<IHttpActionResult> GetSet(int id)
         {
@@ -31,9 +31,22 @@ namespace StrengthTrainer.Controllers
             return Ok(set);
         }
 
-        // POST api/<controller>
-        public void Post([FromBody]string value)
+        // POST api/sets
+        [ResponseType(typeof(SetModel))]
+        public async Task<IHttpActionResult> Post([FromBody]string value)
         {
+            var set = new Set();
+
+            //temp
+            set.WorkoutExerciseId = 1;
+            set.Number = 1;
+            set.Reps = 20;
+            set.Weight = 100;
+            set.StartDateTime = DateTime.Now;
+
+            var result = await this.provider.StoreSet(set);
+
+            return this.Ok<bool>(result);
         }
 
         // PUT api/<controller>/5
